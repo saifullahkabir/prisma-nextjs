@@ -3,7 +3,6 @@ import { prisma } from "../../lib/prisma";
 import config from "../../config";
 import { RegisterUser } from "./user.interface";
 
-
 const registerUserIntoDB = async (payload: RegisterUser) => {
   const { name, email, password, profilePhoto } = payload;
 
@@ -25,20 +24,11 @@ const registerUserIntoDB = async (payload: RegisterUser) => {
       name,
       email,
       password: hashedPassword,
-    },
-  });
-
-  await prisma.profile.create({
-    data: {
-      userId: createdUser.id,
-      profilePhoto,
-    },
-  });
-
-  const user = await prisma.user.findUnique({
-    where: {
-      id: createdUser.id,
-      email: createdUser.email || email,
+      profile: {
+        create: {
+          profilePhoto,
+        },
+      },
     },
     omit: {
       password: true,
@@ -48,9 +38,28 @@ const registerUserIntoDB = async (payload: RegisterUser) => {
     },
   });
 
-  return user;
+  // await prisma.profile.create({
+  //   data: {
+  //     userId: createdUser.id,
+  //     profilePhoto,
+  //   },
+  // });
+
+  // const user = await prisma.user.findUnique({
+  //   where: {
+  //     id: createdUser.id,
+  //   },
+  //   omit: {
+  //     password: true,
+  //   },
+  //   include: {
+  //     profile: true,
+  //   },
+  // });
+
+  return createdUser;
 };
 
 export const userService = {
-    registerUserIntoDB
-}
+  registerUserIntoDB,
+};
