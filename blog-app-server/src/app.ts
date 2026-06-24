@@ -2,10 +2,8 @@ import cookieParser from "cookie-parser";
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import config from "./config";
-import HttpStatus from "http-status";
-import { prisma } from "./lib/prisma";
-import bcrypt from "bcryptjs";
-import { userRoute } from "./modules/user/user.route";
+import { userRoutes } from "./modules/user/user.route";
+import { authRoutes } from "./modules/auth/auth.route";
 
 const app: Application = express();
 
@@ -24,7 +22,8 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Blog app server is running");
 });
 
-app.use("/api/users", userRoute);
+app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
 
 app.post("/api", async (req: Request, res: Response) => {
   

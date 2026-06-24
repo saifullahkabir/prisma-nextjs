@@ -1,9 +1,9 @@
 import bcrypt from "bcryptjs";
 import { prisma } from "../../lib/prisma";
 import config from "../../config";
-import { RegisterUser } from "./user.interface";
+import { IRegisterUser } from "./user.interface";
 
-const registerUserIntoDB = async (payload: RegisterUser) => {
+const registerUserIntoDB = async (payload: IRegisterUser) => {
   const { name, email, password, profilePhoto } = payload;
 
   const isUserExist = await prisma.user.findUnique({
