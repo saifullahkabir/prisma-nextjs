@@ -1,5 +1,5 @@
 import { prisma } from "../../lib/prisma";
-import { ICreatePostPayload } from "./post.interface";
+import { ICreatePostPayload, IUpdatePostPayload } from "./post.interface";
 
 const createPost = async (payload: ICreatePostPayload, userId: string) => {
   const result = await prisma.post.create({
@@ -60,7 +60,34 @@ const updatePost = async (
   authorId: string,
   isAdmin: boolean,
 ) => {
-  
+  const post = await prisma.post.findUniqueOrThrow({
+    where: {
+      id: postId,
+    },
+  });
+
+  if (!isAdmin && post.authorId !== authorId) {
+    throw new Error("You can't update others post!");
+  }
+
+  const result = await prisma.post.update({
+    where: {
+      id: postId,
+    },
+
+    data: payload,
+
+    include: {
+      author: {
+        omit: {
+          password: true,
+        },
+      },
+      comments: true,
+    },
+  });
+
+  return result;
 };
 
 const deletePost = () => {};

@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { catchAsync } from "../../utils/catchAsync";
 import { postService } from "./post.service";
 import { sendResponse } from "../../utils/sendResponse";
+import { Role } from "../../../generated/prisma/enums";
 
 const createPost = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -48,7 +49,27 @@ const getPostById = catchAsync(
 );
 
 const updatePost = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {},
+  async (req: Request, res: Response, next: NextFunction) => {
+    const postId = req.params.postId as string;
+    const payload = req.body;
+
+    const authorId = req.user?.id as string;
+    const isAdmin = req.user?.role === Role.ADMIN;
+
+    const result = await postService.updatePost(
+      postId,
+      payload,
+      authorId,
+      isAdmin,
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.OK,
+      message: "Post updated successfully",
+      data: result,
+    });
+  },
 );
 
 const deletePost = catchAsync(
