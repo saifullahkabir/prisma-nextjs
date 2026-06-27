@@ -12,6 +12,15 @@ router.post(
 );
 
 router.get("/", postController.getAllPosts);
+
+router.get("/stats", auth(Role.ADMIN), postController.getPostsStats);
+
+router.get(
+  "/my-posts",
+  auth(Role.USER, Role.AUTHOR, Role.ADMIN),
+  postController.getMyPosts,
+);
+
 router.get("/:postId", postController.getPostById);
 
 router.patch(
@@ -25,8 +34,5 @@ router.delete(
   auth(Role.USER, Role.AUTHOR, Role.ADMIN),
   postController.deletePost,
 );
-
-router.get("/stats", auth(Role.ADMIN), postController.getPostsStats);
-router.get("/my-posts", auth(Role.AUTHOR, Role.ADMIN), postController.getMyPosts);
 
 export const postRoutes = router;

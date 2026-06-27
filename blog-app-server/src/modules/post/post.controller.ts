@@ -60,7 +60,16 @@ const getPostsStats = catchAsync(
 );
 
 const getMyPosts = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {},
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await postService.getMyPosts(req.user!.id);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.OK,
+      message: "My Posts retrieved successfully",
+      data: result,
+    });
+  },
 );
 
 export const postController = {

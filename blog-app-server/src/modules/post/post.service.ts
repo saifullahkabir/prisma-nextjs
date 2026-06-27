@@ -60,7 +60,35 @@ const deletePost = () => {};
 
 const getPostsStats = () => {};
 
-const getMyPosts = () => {};
+const getMyPosts = async (authorId: string) => {
+  const result = await prisma.post.findMany({
+    where: {
+      authorId,
+    },
+
+    orderBy: {
+      createdAt: "desc",
+    },
+
+    include: {
+      author: {
+        omit: {
+          password: true,
+        },
+      },
+      comments: true,
+
+      _count: {
+        select:{
+          comments: true
+        }
+      }
+    },
+
+  });
+
+  return result;
+};
 
 export const postService = {
   createPost,
