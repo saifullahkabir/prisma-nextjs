@@ -54,7 +54,14 @@ const getPostById = async (postId: string) => {
   return updatedPost;
 };
 
-const updatePost = () => {};
+const updatePost = async (
+  postId: string,
+  payload: IUpdatePostPayload,
+  authorId: string,
+  isAdmin: boolean,
+) => {
+  
+};
 
 const deletePost = () => {};
 
@@ -79,12 +86,11 @@ const getMyPosts = async (authorId: string) => {
       comments: true,
 
       _count: {
-        select:{
-          comments: true
-        }
-      }
+        select: {
+          comments: true,
+        },
+      },
     },
-
   });
 
   return result;
