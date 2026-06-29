@@ -11,7 +11,7 @@ const createPost = catchAsync(
 
     const result = await postService.createPost(req.body, userId as string);
 
-    sendResponse(res, {
+    return sendResponse(res, {
       success: true,
       statusCode: HttpStatus.CREATED,
       message: "Post created successfully",
@@ -24,7 +24,7 @@ const getAllPosts = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const posts = await postService.getAllPosts();
 
-    sendResponse(res, {
+    return sendResponse(res, {
       success: true,
       statusCode: HttpStatus.OK,
       message: "Posts retrieved successfully",
@@ -39,7 +39,7 @@ const getPostById = catchAsync(
 
     const result = await postService.getPostById(postId as string);
 
-    sendResponse(res, {
+    return sendResponse(res, {
       success: true,
       statusCode: HttpStatus.OK,
       message: "Post retrieved successfully",
@@ -63,7 +63,7 @@ const updatePost = catchAsync(
       isAdmin,
     );
 
-    sendResponse(res, {
+    return sendResponse(res, {
       success: true,
       statusCode: HttpStatus.OK,
       message: "Post updated successfully",
@@ -81,7 +81,7 @@ const deletePost = catchAsync(
 
     await postService.deletePost(postId, authorId, isAdmin);
 
-    sendResponse(res, {
+    return sendResponse(res, {
       success: true,
       statusCode: HttpStatus.OK,
       message: "Post deleted successfully",
@@ -91,14 +91,23 @@ const deletePost = catchAsync(
 );
 
 const getPostsStats = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {},
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await postService.getPostsStats();
+
+    return sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.OK,
+      message: "Post stats retrieved successfully",
+      data: result,
+    });
+  },
 );
 
 const getMyPosts = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const result = await postService.getMyPosts(req.user!.id);
 
-    sendResponse(res, {
+    return sendResponse(res, {
       success: true,
       statusCode: HttpStatus.OK,
       message: "My Posts retrieved successfully",

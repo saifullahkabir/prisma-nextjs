@@ -1,4 +1,4 @@
-import { CommentStatus } from "../../../generated/prisma/enums";
+import { CommentStatus, PostStatus } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 import { ICreatePostPayload, IUpdatePostPayload } from "./post.interface";
 
@@ -134,7 +134,72 @@ const deletePost = async (
   });
 };
 
-const getPostsStats = () => {};
+const getPostsStats = async () => {
+  const result = await prisma.$transaction(async (tx) => {
+    const totalPosts = await tx.post.count();
+
+    const totalPublishedPosts = await tx.post.count({
+      where: {
+        status: PostStatus.PUBLISHED,
+      },
+    });
+
+    const totalArchivePosts = await tx.post.count({
+      where: {
+        status: PostStatus.ARCHIVE,
+      },
+    });
+
+    const totalDraftPosts = await tx.post.count({
+      where: {
+        status: PostStatus.DRAFT,
+      },
+    });
+
+    const totalComments = await tx.comment.count();
+
+    const totalApprovedComments = await tx.comment.count({
+      where: {
+        status: CommentStatus.APPROVED,
+      },
+    });
+
+    const totalRejectedComments = await tx.comment.count({
+      where: {
+        status: CommentStatus.REJECT,
+      },
+    });
+
+    //* This is not a good approach
+    // const allPosts = await tx.post.findMany();
+    // let totalPostsViews = 0;
+
+    // allPosts.forEach((post) => {
+    //   totalPostsViews = totalPostsViews + post.views;
+    // });
+
+    const totalPostsViewsAggregate = await tx.post.aggregate({
+      _sum: {
+        views: true,
+      },
+    });
+
+    const totalPostsViews = totalPostsViewsAggregate._sum.views;
+
+    return {
+      totalPosts,
+      totalPublishedPosts,
+      totalArchivePosts,
+      totalDraftPosts,
+      totalComments,
+      totalApprovedComments,
+      totalRejectedComments,
+      totalPostsViews,
+    };
+  });
+
+  return result;
+};
 
 const getMyPosts = async (authorId: string) => {
   const result = await prisma.post.findMany({
