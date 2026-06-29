@@ -1,14 +1,31 @@
-const createComment = {};
+import { prisma } from "../../lib/prisma";
+import { ICreateComment } from "./comment.interface";
 
-const getCommentByAuthorId = {};
+const createComment = async (payload: ICreateComment, userId: string) => {
+  const createComment = await prisma.comment.create({
+    data: {
+      ...payload,
+      authorId: userId,
+    },
 
-const getCommentByCommentId = {};
+    omit: {
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
 
-const updateComment = {};
+  return createComment;
+};
 
-const deleteComment = {};
+const getCommentByAuthorId = () => {};
 
-const moderateComment = {};
+const getCommentByCommentId = () => {};
+
+const updateComment = () => {};
+
+const deleteComment = () => {};
+
+const moderateComment = () => {};
 
 export const commentService = {
   createComment,
