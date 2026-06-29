@@ -1,0 +1,481 @@
+{
+  "info": {
+    "_postman_id": "8ed3a5f1-7949-4668-9f11-ff503b88395a",
+    "name": "Blog App Server",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "50776131",
+    "_collection_link": "https://go.postman.co/collection/50776131-8ed3a5f1-7949-4668-9f11-ff503b88395a?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "register user",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlNhaWZ1bGxhaCBLYWJpciBSYW5hIiwicm9sZSI6Im1haW50YWluZXIiLCJpYXQiOjE3Nzk1Mjg2NDIsImV4cCI6MTc4MDEzMzQ0Mn0.DlbycDZ-ft48dbMJZD5fUlJ-XokQ_dweSDL5BFovX6I",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"User 11\",\r\n    \"email\" : \"user11@gmail.com\",\r\n    \"password\" : \"123456\",\r\n    \"profilePhoto\": \"www.google.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/users/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get my profile",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI4NzU2ZjhiLTFmMDEtNGE3ZS05ZDMxLTc5ZGE5M2NmYzc5ZCIsIm5hbWUiOiJVc2VyIDExIiwiZW1haWwiOiJ1c2VyMTFAZ21haWwuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3ODIzMjk5NjgsImV4cCI6MTc4MjQxNjM2OH0.kbCfplLmxh14N3jdixOGtqwsLwA4XQIvuN9Eqj4DMCM",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"User 11\",\r\n    \"email\" : \"user11@gmail.com\",\r\n    \"password\" : \"123456\",\r\n    \"profilePhoto\": \"www.google.com\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/users/me",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update my profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlNhaWZ1bGxhaCBLYWJpciBSYW5hIiwicm9sZSI6Im1haW50YWluZXIiLCJpYXQiOjE3Nzk1Mjg2NDIsImV4cCI6MTc4MDEzMzQ0Mn0.DlbycDZ-ft48dbMJZD5fUlJ-XokQ_dweSDL5BFovX6I",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Updated User 11\",\r\n    \"profilePhoto\": \"www.facbook.com\",\r\n    \"bio\": \"added new bio 2\"\r\n   \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/users/my-profile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "users",
+                "my-profile"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlNhaWZ1bGxhaCBLYWJpciBSYW5hIiwicm9sZSI6Im1haW50YWluZXIiLCJpYXQiOjE3Nzk1Mjg2NDIsImV4cCI6MTc4MDEzMzQ0Mn0.DlbycDZ-ft48dbMJZD5fUlJ-XokQ_dweSDL5BFovX6I",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"user11@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "refresh-token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlNhaWZ1bGxhaCBLYWJpciBSYW5hIiwicm9sZSI6Im1haW50YWluZXIiLCJpYXQiOjE3Nzk1Mjg2NDIsImV4cCI6MTc4MDEzMzQ0Mn0.DlbycDZ-ft48dbMJZD5fUlJ-XokQ_dweSDL5BFovX6I",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"user11@gmail.com\",\r\n    \"password\": \"123456\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/refresh-token",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "refresh-token"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Posts",
+      "item": [
+        {
+          "name": "create post",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlNhaWZ1bGxhaCBLYWJpciBSYW5hIiwicm9sZSI6Im1haW50YWluZXIiLCJpYXQiOjE3Nzk1Mjg2NDIsImV4cCI6MTc4MDEzMzQ0Mn0.DlbycDZ-ft48dbMJZD5fUlJ-XokQ_dweSDL5BFovX6I",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"title\": \"First Post\",\r\n   \"content\": \"This is my First post.\"\r\n   \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/posts",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all posts",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlNhaWZ1bGxhaCBLYWJpciBSYW5hIiwicm9sZSI6Im1haW50YWluZXIiLCJpYXQiOjE3Nzk1Mjg2NDIsImV4cCI6MTc4MDEzMzQ0Mn0.DlbycDZ-ft48dbMJZD5fUlJ-XokQ_dweSDL5BFovX6I",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"user11@gmail.com\",\r\n    \"password\": \"123456\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/posts",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get post by id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlNhaWZ1bGxhaCBLYWJpciBSYW5hIiwicm9sZSI6Im1haW50YWluZXIiLCJpYXQiOjE3Nzk1Mjg2NDIsImV4cCI6MTc4MDEzMzQ0Mn0.DlbycDZ-ft48dbMJZD5fUlJ-XokQ_dweSDL5BFovX6I",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"user11@gmail.com\",\r\n    \"password\": \"123456\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/posts/89704908-fc67-4caf-8df7-811e0ac9f8b2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "posts",
+                "89704908-fc67-4caf-8df7-811e0ac9f8b2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get my posts",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlNhaWZ1bGxhaCBLYWJpciBSYW5hIiwicm9sZSI6Im1haW50YWluZXIiLCJpYXQiOjE3Nzk1Mjg2NDIsImV4cCI6MTc4MDEzMzQ0Mn0.DlbycDZ-ft48dbMJZD5fUlJ-XokQ_dweSDL5BFovX6I",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"user11@gmail.com\",\r\n    \"password\": \"123456\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/posts/my-posts",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "posts",
+                "my-posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "post update",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlNhaWZ1bGxhaCBLYWJpciBSYW5hIiwicm9sZSI6Im1haW50YWluZXIiLCJpYXQiOjE3Nzk1Mjg2NDIsImV4cCI6MTc4MDEzMzQ0Mn0.DlbycDZ-ft48dbMJZD5fUlJ-XokQ_dweSDL5BFovX6I",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"title\": \"Second post updated 2\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/posts/51711a2d-5da8-463f-ac11-837926677f22",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "posts",
+                "51711a2d-5da8-463f-ac11-837926677f22"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "post delete",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlNhaWZ1bGxhaCBLYWJpciBSYW5hIiwicm9sZSI6Im1haW50YWluZXIiLCJpYXQiOjE3Nzk1Mjg2NDIsImV4cCI6MTc4MDEzMzQ0Mn0.DlbycDZ-ft48dbMJZD5fUlJ-XokQ_dweSDL5BFovX6I",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"title\": \"Second post updated 2\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/posts/b6940b42-1334-44ae-a8c0-8e3ede85a727",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "posts",
+                "b6940b42-1334-44ae-a8c0-8e3ede85a727"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Post stats",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlNhaWZ1bGxhaCBLYWJpciBSYW5hIiwicm9sZSI6Im1haW50YWluZXIiLCJpYXQiOjE3Nzk1Mjg2NDIsImV4cCI6MTc4MDEzMzQ0Mn0.DlbycDZ-ft48dbMJZD5fUlJ-XokQ_dweSDL5BFovX6I",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"title\": \"Second Post\",\r\n   \"content\": \"This is my second post.\"\r\n   \r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/posts/stats",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "posts",
+                "stats"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Comment",
+      "item": [
+        {
+          "name": "create comment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlNhaWZ1bGxhaCBLYWJpciBSYW5hIiwicm9sZSI6Im1haW50YWluZXIiLCJpYXQiOjE3Nzk1Mjg2NDIsImV4cCI6MTc4MDEzMzQ0Mn0.DlbycDZ-ft48dbMJZD5fUlJ-XokQ_dweSDL5BFovX6I",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"content\": \"This is my second comment\",\r\n   \"postId\" : \"b6940b42-1334-44ae-a8c0-8e3ede85a727\"\r\n   \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/comments",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "comments"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
