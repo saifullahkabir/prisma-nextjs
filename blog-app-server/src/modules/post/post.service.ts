@@ -5,10 +5,14 @@ import { ICreatePostPayload, IUpdatePostPayload } from "./post.interface";
 const createPost = async (payload: ICreatePostPayload, userId: string) => {
   const result = await prisma.post.create({
     data: {
-      ...payload,
+      title: payload.title,
+      content: payload.content,
+      thumbnail: payload.thumbnail,
+      tags: payload.tags,
       authorId: userId,
     },
   });
+
   return result;
 };
 
@@ -92,12 +96,26 @@ const updatePost = async (
     throw new Error("You can't update others post!");
   }
 
+  const { title, content, thumbnail, tags, status, isFeatured } = payload;
+
+  const data: IUpdatePostPayload = {
+    title,
+    content,
+    thumbnail,
+    tags,
+  };
+
+  if (isAdmin) {
+    data.status = status;
+    data.isFeatured = isFeatured;
+  }
+
   const result = await prisma.post.update({
     where: {
       id: postId,
     },
 
-    data: payload,
+    data: data,
 
     include: {
       author: {
@@ -256,7 +274,7 @@ const getPostsStats = async () => {
       totalComments,
       totalApprovedComments,
       totalRejectedComments,
-      totalPostsViews: totalPostsViews._sum.views?? 0,
+      totalPostsViews: totalPostsViews._sum.views ?? 0,
     };
   });
 
