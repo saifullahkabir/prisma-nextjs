@@ -1,5 +1,9 @@
 import { prisma } from "../../lib/prisma";
-import { ICreateComment, IUpdateComment } from "./comment.interface";
+import {
+  ICreateComment,
+  IModerateComment,
+  IUpdateComment,
+} from "./comment.interface";
 
 const createComment = async (payload: ICreateComment, userId: string) => {
   await prisma.post.findUniqueOrThrow({
@@ -116,7 +120,35 @@ const deleteComment = async (commentId: string, authorId: string) => {
   return null;
 };
 
-const moderateComment = () => {};
+const moderateComment = async (
+  commentId: string,
+  payload: IModerateComment,
+) => {
+  const commentData = await prisma.comment.findUniqueOrThrow({
+    where: {
+      id: commentId,
+    },
+    select: {
+      id: true,
+      status: true,
+    },
+  });
+
+  if (commentData.status === payload.status) {
+    throw new Error(
+      `Your provided status (${payload.status}) is already up to date.`,
+    );
+  }
+
+  const result = await prisma.comment.update({
+    where: {
+      id: commentId,
+    },
+    data: payload,
+  });
+
+  return result;
+};
 
 export const commentService = {
   createComment,
