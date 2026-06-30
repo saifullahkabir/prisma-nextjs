@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { catchAsync } from "../../utils/catchAsync";
 import { commentService } from "./comment.service";
 import { sendResponse } from "../../utils/sendResponse";
+import { Role } from "../../../generated/prisma/enums";
 
 const createComment = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -50,7 +51,24 @@ const getCommentByCommentId = catchAsync(
 );
 
 const updateComment = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {},
+  async (req: Request, res: Response, next: NextFunction) => {
+    const commentId = req.params.commentId as string;
+    const payload = req.body;
+    const authorId = req.user?.id as string;
+
+    const result = await commentService.updateComment(
+      commentId,
+      payload,
+      authorId,
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.OK,
+      message: "Comment updated successfully",
+      data: result,
+    });
+  },
 );
 
 const deleteComment = catchAsync(
