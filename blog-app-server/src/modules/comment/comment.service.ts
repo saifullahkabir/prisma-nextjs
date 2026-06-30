@@ -96,7 +96,25 @@ const updateComment = async (
   return result;
 };
 
-const deleteComment = () => {};
+const deleteComment = async (commentId: string, authorId: string) => {
+  await prisma.comment.findUniqueOrThrow({
+    where: {
+      id: commentId,
+      authorId,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  const result = await prisma.comment.delete({
+    where: {
+      id: commentId,
+    },
+  });
+
+  return null;
+};
 
 const moderateComment = () => {};
 
