@@ -1,4 +1,5 @@
 import { CommentStatus, PostStatus } from "../../../generated/prisma/enums";
+import { PostWhereInput } from "../../../generated/prisma/models";
 import { prisma } from "../../lib/prisma";
 import {
   ICreatePostPayload,
@@ -28,35 +29,103 @@ const getAllPosts = async (query: IPostQuery) => {
   const sortBy = query.sortBy ? query.sortBy : "createdAt";
   const sortOrder = query.sortOrder ? query.sortOrder : "desc";
 
-  const result = await prisma.post.findMany({
-    where: {
-      AND: [
-        //* searchTerm(searching)
-        query.searchTerm
-          ? {
-              OR: [
-                {
-                  title: {
-                    contains: query.searchTerm,
-                    mode: "insensitive",
-                  },
-                },
-                {
-                  content: {
-                    contains: query.searchTerm,
-                    mode: "insensitive",
-                  },
-                },
-              ],
-            }
-          : {},
+  const andConditions: PostWhereInput[] = [];
 
-        //* title filtering
-        query.title ? { title: query.title } : {},
-
-        //* content filtering
-        query.content ? { content: query.content } : {},
+  if (query.searchTerm) {
+    andConditions.push({
+      OR: [
+        {
+          title: {
+            contains: query.searchTerm,
+            mode: "insensitive",
+          },
+        },
+        {
+          content: {
+            contains: query.searchTerm,
+            mode: "insensitive",
+          },
+        },
       ],
+    });
+  }
+
+  if (query.title) {
+    andConditions.push({
+      title: query.title,
+    });
+  }
+
+  if (query.content) {
+    andConditions.push({
+      content: query.content,
+    });
+  }
+
+  if (query.authorId) {
+    andConditions.push({
+      authorId: query.authorId,
+    });
+  }
+
+  if (query.isFeatured) {
+    andConditions.push({
+      isFeatured: query.isFeatured === "true",
+    });
+  }
+
+  if (query.tags) {
+    const parsedTags =
+      typeof query.tags === "string" ? JSON.parse(query.tags) : query.tags;
+
+    andConditions.push({
+      tags: {
+        hasSome: parsedTags,
+      },
+    });
+  }
+
+  if (query.status) {
+    andConditions.push({
+      status: query.status as PostStatus,
+    });
+  }
+
+  const result = await prisma.post.findMany({
+    //* dynamic searching & filtering
+    // where: {
+    //   AND: [
+    //     //* searchTerm(searching)
+    //     query.searchTerm ?
+    //        {
+    //           OR: [
+    //             {
+    //               title: {
+    //                 contains: query.searchTerm,
+    //                 mode: "insensitive",
+    //               },
+    //             },
+    //             {
+    //               content: {
+    //                 contains: query.searchTerm,
+    //                 mode: "insensitive",
+    //               },
+    //             },
+    //           ],
+    //         }
+    //       : {},
+
+    //     //* title filtering
+    //     query.title ? { title: query.title } : {},
+
+    //     //* content filtering
+    //     query.content ? { content: query.content } : {},
+    //   ],
+    // },
+
+    //* Optimize way
+    where: {
+      AND: andConditions,
     },
 
     //* pagination
