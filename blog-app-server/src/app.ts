@@ -6,6 +6,7 @@ import { userRoutes } from "./modules/user/user.route";
 import { authRoutes } from "./modules/auth/auth.route";
 import { postRoutes } from "./modules/post/post.route";
 import { commentRoutes } from "./modules/comment/comment.route";
+import { notFound } from "./middlewares/notFound";
 
 const app: Application = express();
 
@@ -29,6 +30,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/comments", commentRoutes);
 
-app.post("/api", async (req: Request, res: Response) => {});
+app.use(notFound);
 
 export default app;
