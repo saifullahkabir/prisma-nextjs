@@ -21,6 +21,13 @@ const createPost = async (payload: ICreatePostPayload, userId: string) => {
 };
 
 const getAllPosts = async (query: IPostQuery) => {
+  const limit = query.limit ? Number(query.limit) : 9;
+  const page = query.page ? Number(query.page) : 1;
+  const skip = (page - 1) * limit;
+
+  const sortBy = query.sortBy ? query.sortBy : "createdAt";
+  const sortOrder = query.sortOrder ? query.sortOrder : "desc";
+
   const result = await prisma.post.findMany({
     where: {
       AND: [
@@ -42,7 +49,7 @@ const getAllPosts = async (query: IPostQuery) => {
                 },
               ],
             }
-          : {}, 
+          : {},
 
         //* title filtering
         query.title ? { title: query.title } : {},
@@ -50,6 +57,15 @@ const getAllPosts = async (query: IPostQuery) => {
         //* content filtering
         query.content ? { content: query.content } : {},
       ],
+    },
+
+    //* pagination
+    take: limit,
+    skip: skip,
+
+    //* sorting
+    orderBy: {
+      [sortBy]: sortOrder,
     },
 
     include: {
