@@ -6,13 +6,13 @@ import { IRegisterUser } from "./user.interface";
 const registerUserIntoDB = async (payload: IRegisterUser) => {
   const { name, email, password, profilePhoto } = payload;
 
-  const isUserExist = await prisma.user.findUnique({
+  const isUserExist = await prisma.user.findUniqueOrThrow({
     where: { email },
   });
 
-  if (isUserExist) {
-    throw new Error("User with this email already exists");
-  }
+  // if (isUserExist) {
+  //   throw new Error("User with this email already exists");
+  // }
 
   const hashedPassword = await bcrypt.hash(
     password,
