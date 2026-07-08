@@ -34,7 +34,7 @@ const getAllPosts = catchAsync(
       meta: posts.meta,
     });
   },
-);
+);      
 
 const getPostById = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
