@@ -10,8 +10,6 @@ model User {
     profile      Profile?
     subscription Subscription?
 
-    isPremium Boolean @default(false)
-
     posts    Post[]
     comments Comment[]
 

@@ -1,4 +1,8 @@
-import { CommentStatus, PostStatus } from "../../../generated/prisma/enums";
+import {
+  CommentStatus,
+  PostStatus,
+  SubscriptionStatus,
+} from "../../../generated/prisma/enums";
 import { PostWhereInput } from "../../../generated/prisma/models";
 import { prisma } from "../../lib/prisma";
 import {
@@ -8,13 +12,27 @@ import {
 } from "./post.interface";
 
 const createPost = async (payload: ICreatePostPayload, userId: string) => {
+  const user = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: userId,
+    },
+    include: {
+      subscription: true,
+    },
+  });
+
+  if (
+    payload.isPremium &&
+    user.subscription?.status !== SubscriptionStatus.ACTIVE
+  ) {
+    throw new Error(
+      "You are not a premium user. So you can not create Premium Content.",
+    );
+  }
+
   const result = await prisma.post.create({
     data: {
-      title: payload.title,
-      content: payload.content,
-      thumbnail: payload.thumbnail,
-      tags: payload.tags,
-      isPremium: payload.isPremium,
+      ...payload,
       authorId: userId,
     },
   });
@@ -92,6 +110,10 @@ const getAllPosts = async (query: IPostQuery) => {
     });
   }
 
+  andConditions.push({
+    isPremium: false,
+  });
+
   const result = await prisma.post.findMany({
     //* dynamic searching & filtering
     // where: {
@@ -147,7 +169,24 @@ const getAllPosts = async (query: IPostQuery) => {
       comments: true,
     },
   });
-  return result;
+
+  const totalPostCount = await prisma.post.count({
+    where: {
+      AND: andConditions,
+    },
+  });
+
+  const totalPages = Math.ceil(totalPostCount / limit);
+
+  return {
+    data: result,
+    meta: {
+      page: page,
+      limit: limit,
+      totalPosts: totalPostCount,
+      totalPages,
+    },
+  };
 };
 
 const getPostById = async (postId: string) => {
@@ -168,6 +207,7 @@ const getPostById = async (postId: string) => {
     const post = await tx.post.findUniqueOrThrow({
       where: {
         id: postId,
+        isPremium: false,
       },
 
       include: {
