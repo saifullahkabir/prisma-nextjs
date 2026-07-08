@@ -14,6 +14,7 @@ const createPost = async (payload: ICreatePostPayload, userId: string) => {
       content: payload.content,
       thumbnail: payload.thumbnail,
       tags: payload.tags,
+      isPremium: payload.isPremium,
       authorId: userId,
     },
   });
