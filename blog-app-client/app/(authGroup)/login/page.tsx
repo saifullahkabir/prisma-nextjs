@@ -1,66 +1,35 @@
+import LoginForm from "../_components/LoginForm";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardAction,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
 import Link from "next/link";
 
 export default function LoginPage() {
   return (
-    <Card className="w-full max-w-sm mx-auto my-auto">
-      <CardHeader>
-        <CardTitle>Login to your account</CardTitle>
-        <CardDescription>
-          Enter your email below to login to your account
-        </CardDescription>
-        <CardAction>
-          <Link href={"/register"}>
-            <Button variant="link">Sign Up</Button>
-          </Link>
-        </CardAction>
-      </CardHeader>
-      <CardContent>
-        <form>
-          <div className="flex flex-col gap-6">
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                required
-              />
-            </div>
-            <div className="grid gap-2">
-              <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
-                <a
-                  href="#"
-                  className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                >
-                  Forgot your password?
-                </a>
-              </div>
-              <Input id="password" type="password" required />
-            </div>
-          </div>
-        </form>
-      </CardContent>
-      <CardFooter className="flex-col gap-2">
-        <Button type="submit" className="w-full">
-          Login
-        </Button>
-        <Button variant="outline" className="w-full">
-          Login with Google
-        </Button>
-      </CardFooter>
-    </Card>
+    <section className="px-4 md:px-0 my-auto">
+      <Card className="w-full max-w-md mx-auto">
+        <CardHeader className="md:px-6 md:py-4 py-3">
+          <CardTitle>Login to your account</CardTitle>
+          <CardDescription>
+            Enter your email below to login to your account
+          </CardDescription>
+          <CardAction>
+            <Link href={"/register"}>
+              <Button variant="link">Sign Up</Button>
+            </Link>
+          </CardAction>
+        </CardHeader>
+        <CardContent className="md:px-6">
+          <LoginForm />
+        </CardContent>
+      </Card>
+    </section>
   );
 }
