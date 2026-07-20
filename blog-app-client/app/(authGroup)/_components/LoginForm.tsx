@@ -3,10 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { loginAction } from "../_actions/authActions";
 
 export default function LoginForm() {
   return (
-    <form>
+    <form action={loginAction}>
       <div className="flex flex-col gap-6">
         <div className="grid gap-2">
           <Label htmlFor="email">Email</Label>
