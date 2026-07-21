@@ -1,9 +1,10 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 type LoginState = {
-  success: true;
+  success: boolean;
   statusCode: number;
   message: string;
   data: {
@@ -34,7 +35,7 @@ export const loginAction = async (
     body: JSON.stringify(payload),
   });
 
-  const result: LoginState = await res.json();
+  const result = await res.json();
 
   if (result.success) {
     const cookieStore = await cookies();
@@ -50,6 +51,9 @@ export const loginAction = async (
       sameSite: "lax",
       maxAge: 1000 * 60 * 60 * 24 * 7,
     });
+
+    //* server side navigation
+    redirect("/dashboard", "replace");
   }
 
   return result;
