@@ -1,5 +1,7 @@
 "use server";
 
+import { cookies } from "next/headers";
+
 type LoginState = {
   success: true;
   statusCode: number;
@@ -14,8 +16,7 @@ export const loginAction = async (
   prevState: LoginState,
   formData: FormData,
 ) => {
-
-  console.log("prev state" , prevState);
+  console.log("prev state", prevState);
 
   const email = formData.get("email");
   const password = formData.get("password");
@@ -33,8 +34,23 @@ export const loginAction = async (
     body: JSON.stringify(payload),
   });
 
-  const result = await res.json();
+  const result: LoginState = await res.json();
 
-  console.log(result);
+  if (result.success) {
+    const cookieStore = await cookies();
+
+    cookieStore.set("accessToken", result.data.accessToken, {
+      httpOnly: true,
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60 * 24,
+    });
+
+    cookieStore.set("refreshToken", result.data.refreshToken, {
+      httpOnly: true,
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    });
+  }
+
   return result;
 };
