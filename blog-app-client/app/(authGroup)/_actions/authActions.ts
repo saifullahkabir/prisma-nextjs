@@ -1,6 +1,22 @@
 "use server";
 
-export const loginAction = async (formData: FormData) => {
+type LoginState = {
+  success: true;
+  statusCode: number;
+  message: string;
+  data: {
+    accessToken: string;
+    refreshToken: string;
+  };
+};
+
+export const loginAction = async (
+  prevState: LoginState,
+  formData: FormData,
+) => {
+
+  console.log("prev state" , prevState);
+
   const email = formData.get("email");
   const password = formData.get("password");
 
@@ -17,7 +33,8 @@ export const loginAction = async (formData: FormData) => {
     body: JSON.stringify(payload),
   });
 
-  const result =await res.json();
+  const result = await res.json();
 
   console.log(result);
+  return result;
 };
