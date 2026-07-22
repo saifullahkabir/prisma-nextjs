@@ -20,11 +20,15 @@ export const getMe = async () => {
 
       Cookie: `accessToken=${accessToken}`,
     },
+
+    cache: "force-cache",
+    next: {
+      revalidate: 60 * 60 * 24, //* 1 day
+      tags: ["my-profile"],
+    },
   });
 
   const result = await res.json();
-
-  console.log(result);
 
   return result;
 };

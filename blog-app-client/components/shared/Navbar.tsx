@@ -7,6 +7,9 @@ import Link from "next/link";
 import { Menu, X, LogOut, User } from "lucide-react";
 import BlogLogo from "../ui/blog-logo";
 import { Button } from "../ui/button";
+import { logout } from "@/service/logout";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 // Navigation items array
 const navItems = [
@@ -52,12 +55,22 @@ export default function Navbar({ user }: NavbarProps) {
   const toggleMenu = () => setIsOpen(!isOpen);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
-  const handleLogout = () => {
-    console.log("Logout clicked");
-    setIsDropdownOpen(false);
-    // Add your logout logic here
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      setIsDropdownOpen(false);
+
+      await logout();
+
+      toast.success("Logged out successfully");
+      router.replace("/");
+      router.refresh();
+    } catch {
+      toast.error("Logout failed");
+    }
   };
-  console.log(user);
+
   return (
     <nav className="sticky top-0 z-50 w-full bg-white border-b border-gray-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

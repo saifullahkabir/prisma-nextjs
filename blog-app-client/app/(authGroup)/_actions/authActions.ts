@@ -17,7 +17,7 @@ export const loginAction = async (
   prevState: LoginState,
   formData: FormData,
 ) => {
-  console.log("prev state", prevState);
+  // console.log("prev state", prevState);
 
   const email = formData.get("email");
   const password = formData.get("password");
@@ -42,14 +42,16 @@ export const loginAction = async (
 
     cookieStore.set("accessToken", result.data.accessToken, {
       httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 1000 * 60 * 60 * 24,
+      maxAge: 60 * 60 * 24, //* 1 day
     });
 
     cookieStore.set("refreshToken", result.data.refreshToken, {
       httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 1000 * 60 * 60 * 24 * 7,
+      maxAge: 60 * 60 * 24 * 7, //* 7 day
     });
 
     //* server side navigation
