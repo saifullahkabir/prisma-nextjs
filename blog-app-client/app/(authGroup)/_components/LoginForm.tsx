@@ -57,13 +57,13 @@ export default function LoginForm() {
           {pending ? (
             <SpinnerButton value="Logging in..." />
           ) : (
-            <Button type="submit" className="w-full">
+            <Button size={"lg"} type="submit" className="w-full">
               Login
             </Button>
           )}
-          <Button variant="outline" className="w-full ">
+          {/* <Button variant="outline" className="w-full ">
             Login with Google
-          </Button>
+          </Button> */}
         </div>
       </div>
     </form>

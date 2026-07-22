@@ -7,7 +7,7 @@ type SpinnerButtonProps = {
 
 export function SpinnerButton({ value }: SpinnerButtonProps) {
   return (
-    <Button disabled className="w-full">
+    <Button size={"lg"} disabled className="w-full">
       <Spinner data-icon="inline-start" />
       {value}
     </Button>
