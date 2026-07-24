@@ -20,7 +20,6 @@ app.use(
   }),
 );
 
-
 app.use("/api/subscription/webhook", express.raw({ type: "application/json" }));
 
 app.use(express.json());
@@ -38,8 +37,8 @@ app.use("/api/comments", commentRoutes);
 app.use("/api/subscription", subscriptionRoutes);
 app.use("/api/premium", premiumRoutes);
 
-app.use(globalErrorHandler);
-
 app.use(notFound);
+
+app.use(globalErrorHandler);
 
 export default app;

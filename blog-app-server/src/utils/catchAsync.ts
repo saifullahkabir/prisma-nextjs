@@ -1,4 +1,3 @@
-import HttpStatus from "http-status";
 import { NextFunction, Request, RequestHandler, Response } from "express";
 
 export const catchAsync = (fn: RequestHandler) => {

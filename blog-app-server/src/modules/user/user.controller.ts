@@ -3,8 +3,6 @@ import { NextFunction, Request, Response } from "express";
 import { userService } from "./user.service";
 import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
-import config from "../../config";
-import { IJwtPayload, jwtUtils } from "../../utils/jwt";
 
 const registerUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -28,7 +26,7 @@ const getMyProfile = catchAsync(
       success: true,
       statusCode: HttpStatus.OK,
       message: "Retrieve user profile successfully",
-      data: profile.profile,
+      data: { profile },
     });
   },
 );
@@ -55,5 +53,5 @@ const updateMyProfile = catchAsync(
 export const userController = {
   registerUser,
   getMyProfile,
-  updateMyProfile
+  updateMyProfile,
 };

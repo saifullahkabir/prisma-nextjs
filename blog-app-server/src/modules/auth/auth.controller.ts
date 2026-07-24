@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { catchAsync } from "../../utils/catchAsync";
 import { authService } from "./auth.service";
 import { sendResponse } from "../../utils/sendResponse";
+import config from "../../config";
 
 const loginUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -12,15 +13,15 @@ const loginUser = catchAsync(
 
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      secure: false,
-      sameSite: "none",
+      sameSite: config.node_env === "production" ? "none" : "lax",
+      secure: config.node_env === "production",
       maxAge: 1000 * 60 * 60 * 24, // 1 day
     });
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: false,
-      sameSite: "none",
+      sameSite: config.node_env === "production" ? "none" : "lax",
+      secure: config.node_env === "production",
       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 day
     });
 
@@ -41,8 +42,8 @@ const refreshToken = catchAsync(
 
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      secure: false,
-      sameSite: "none",
+      sameSite: config.node_env === "production" ? "none" : "lax",
+      secure: config.node_env === "production",
       maxAge: 1000 * 60 * 60 * 24,
     });
 
@@ -50,7 +51,7 @@ const refreshToken = catchAsync(
       success: true,
       statusCode: HttpStatus.OK,
       message: "Token refreshed successfully",
-      data: {accessToken},
+      data: { accessToken },
     });
   },
 );
