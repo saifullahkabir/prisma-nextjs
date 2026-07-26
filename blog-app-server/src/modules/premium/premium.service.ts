@@ -81,7 +81,7 @@ const getPremiumContent = async (query: IPostQuery) => {
     where: {
       AND: andConditions,
     },
-    
+
     //* pagination
     take: limit,
     skip: skip,
@@ -98,6 +98,11 @@ const getPremiumContent = async (query: IPostQuery) => {
         },
       },
       comments: true,
+      _count: {
+        select: {
+          comments: true,
+        },
+      },
     },
   });
 
