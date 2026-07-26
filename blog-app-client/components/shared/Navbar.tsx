@@ -14,9 +14,9 @@ import { useRouter } from "next/navigation";
 // Navigation items array
 const navItems = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Services", href: "/services" },
-  { label: "Contact", href: "/contact" },
+  { label: "News", href: "/news" },
+  { label: "Payment", href: "/payment" },
+  { label: "Premium", href: "/premium" },
 ];
 
 type User = {

@@ -35,9 +35,7 @@ export async function proxy(request: NextRequest) {
     const result = await getNewAccessToken();
 
     if (result) {
-      console.log("result", result);
       const newAccessToken = result.data.accessToken;
-      console.log(newAccessToken);
 
       cookieStore.set("accessToken", newAccessToken, {
         httpOnly: true,
