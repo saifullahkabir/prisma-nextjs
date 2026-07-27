@@ -20,14 +20,14 @@ export function NewsCard({ post }: NewsCardProps) {
           //     alt={post.title}
           //     className="h-48 w-full object-cover"
           // />
-          <Image
-            src={post.thumbnail}
-            unoptimized
-            alt={post.title}
-            width={400}
-            height={400}
-            // fill
-          />
+           <Image
+           src={post.thumbnail}
+           alt={post.title}
+           width={400}
+           height={400}
+           unoptimized
+           className="w-full"
+           />
         )}
         <CardHeader>
           <div className="flex flex-wrap items-center gap-1.5">
