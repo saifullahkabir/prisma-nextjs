@@ -9,6 +9,7 @@ import {
 import { IPost } from "@/lib/types";
 import { MessageSquareIcon, SparklesIcon } from "lucide-react";
 import { PostFormDialog } from "./PostFormDialog";
+import { DeletePostButton } from "./DeletePostButton";
 
 type MyPostCardProps = {
   post: IPost;
@@ -30,8 +31,9 @@ export function MyPostCard({ post }: MyPostCardProps) {
           )}
         </div>
         <CardTitle className="text-lg">{post.title}</CardTitle>
-        <CardAction>
+        <CardAction className="flex gap-2">
           <PostFormDialog mode="edit" post={post} />
+          <DeletePostButton postId={post.id} />
         </CardAction>
       </CardHeader>
       <CardContent className="space-y-3">
