@@ -39,3 +39,32 @@ export type IPost = {
     createdAt: string;
     updatedAt: string;
 };
+
+type User = {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: {
+    profile: {
+      id: string;
+      name: string;
+      email: string;
+      activeStatus: "ACTIVE" | "BLOCKED";
+      role: "ADMIN" | "AUTHOR" | "USER";
+      createdAt: string;
+      updatedAt: string;
+      profile: {
+        id: string;
+        profilePhoto: string;
+        bio: string;
+        userId: string;
+        createdAt: string;
+        updatedAt: string;
+      };
+    };
+  };
+};
+
+export type UserProps = {
+  user: User | null;
+};

@@ -10,6 +10,7 @@ import { Button } from "../ui/button";
 import { logout } from "@/service/logout";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { UserProps } from "@/lib/types";
 
 // Navigation items array
 const navItems = [
@@ -20,36 +21,7 @@ const navItems = [
   { label: "Dashboard", href: "/dashboard" },
 ];
 
-type User = {
-  success: boolean;
-  statusCode: number;
-  message: string;
-  data: {
-    profile: {
-      id: string;
-      name: string;
-      email: string;
-      activeStatus: "ACTIVE" | "BLOCKED";
-      role: "ADMIN" | "AUTHOR" | "USER";
-      createdAt: string;
-      updatedAt: string;
-      profile: {
-        id: string;
-        profilePhoto: string;
-        bio: string;
-        userId: string;
-        createdAt: string;
-        updatedAt: string;
-      };
-    };
-  };
-};
-
-type NavbarProps = {
-  user: User | null;
-};
-
-export default function Navbar({ user }: NavbarProps) {
+export default function Navbar({ user }: UserProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 

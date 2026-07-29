@@ -10,33 +10,45 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Newspaper, Podcast } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { SidebarItem, sidebarMenuItems } from "../_config/sidebarMenuItems";
+import BlogLogo from "@/components/ui/blog-logo";
+import { UserProps } from "@/lib/types";
 
-const navItems = [
-  {
-    label: "My Posts",
-    href: "/dashboard/my-posts",
-    icon: Podcast,
-  },
-  {
-    label: "My Profile",
-    href: "/dashboard/my-profile",
-    icon: Podcast,
-  },
-];
+// const navItems = [
+//   {
+//     label: "My Posts",
+//     href: "/dashboard/my-posts",
+//     icon: Podcast,
+//   },
+//   {
+//     label: "My Profile",
+//     href: "/dashboard/my-profile",
+//     icon: Podcast,
+//   },
+// ];
 
-export default function DashboardSidebar() {
+export default function DashboardSidebar({ user }: UserProps) {
   const pathname = usePathname();
+
+  let navItems: SidebarItem[] = [];
+
+  if (user?.data.profile.role === "USER") {
+    navItems = sidebarMenuItems.USER;
+  } else if (user?.data.profile.role === "AUTHOR") {
+    navItems = sidebarMenuItems.AUTHOR;
+  } else if (user?.data.profile.role === "ADMIN") {
+    navItems = sidebarMenuItems.ADMIN;
+  }
 
   return (
     <Sidebar
       collapsible="none"
       className=" h-[calc(100svh-0rem)] border-r border-sidebar-border"
     >
-      <SidebarHeader>
-        <div className="flex items-center gap-2 px-2 py-1.5">
+      <SidebarHeader className="flex items-center">
+        {/* <div>
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground">
             <Newspaper className="h-4 w-4" />
           </div>
@@ -47,16 +59,21 @@ export default function DashboardSidebar() {
               </span>
             </Link>
           </div>
-        </div>
+        </div> */}
+        <BlogLogo />
       </SidebarHeader>
 
-      <SidebarContent>
+      <SidebarContent className="pt-10">
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu >
+            <SidebarMenu className="space-y-2">
               {navItems.map((item) => (
                 <SidebarMenuItem key={item.href}>
-                  <SidebarMenuButton className="text-base" asChild isActive={pathname === item.href}>
+                  <SidebarMenuButton
+                    className="text-base"
+                    asChild
+                    isActive={pathname === item.href}
+                  >
                     <Link href={item.href}>
                       <item.icon />
                       <span>{item.label}</span>
