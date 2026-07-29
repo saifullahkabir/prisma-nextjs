@@ -4,7 +4,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-import { Menu, X, LogOut, User } from "lucide-react";
+import { Menu, X, LogOut, User, LayoutDashboard } from "lucide-react";
 import BlogLogo from "../ui/blog-logo";
 import { Button } from "../ui/button";
 import { logout } from "@/service/logout";
@@ -18,7 +18,7 @@ const navItems = [
   { label: "News", href: "/news" },
   { label: "Payment", href: "/payment" },
   { label: "Premium", href: "/premium" },
-  { label: "Dashboard", href: "/dashboard" },
+  // { label: "Dashboard", href: "/dashboard" },
 ];
 
 export default function Navbar({ user }: UserProps) {
@@ -43,6 +43,13 @@ export default function Navbar({ user }: UserProps) {
       toast.error("Logout failed");
     }
   };
+
+  const dashboardHref =
+    user?.data.profile.role === "USER"
+      ? "/dashboard"
+      : user?.data.profile.role === "AUTHOR"
+        ? "/author-dashboard"
+        : "/admin-dashboard";
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-white border-b border-gray-200 shadow-sm">
@@ -96,13 +103,22 @@ export default function Navbar({ user }: UserProps) {
                     </div>
 
                     <Link
+                      href={dashboardHref}
+                      className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      <LayoutDashboard size={18} />
+                      <span>Dashboard</span>
+                    </Link>
+
+                    {/* <Link
                       href="/profile"
                       className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
                       onClick={() => setIsDropdownOpen(false)}
                     >
                       <User size={18} />
                       <span>Profile</span>
-                    </Link>
+                    </Link> */}
 
                     <button
                       onClick={handleLogout}
