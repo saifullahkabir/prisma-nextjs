@@ -17,6 +17,7 @@ const navItems = [
   { label: "News", href: "/news" },
   { label: "Payment", href: "/payment" },
   { label: "Premium", href: "/premium" },
+  { label: "Dashboard", href: "/dashboard" },
 ];
 
 type User = {
