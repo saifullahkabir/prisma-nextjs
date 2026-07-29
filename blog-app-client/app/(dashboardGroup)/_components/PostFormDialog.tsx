@@ -63,7 +63,7 @@ export function PostFormDialog({ mode, post }: PostFormDialogProps) {
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="max-w-lg">
+      <DialogContent className="md:min-w-lg">
         <DialogHeader>
           <DialogTitle>
             {mode === "edit" ? "Edit Post" : "Create Post"}
