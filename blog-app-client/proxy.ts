@@ -31,7 +31,7 @@ export async function proxy(request: NextRequest) {
     : null;
 
   if (!decodedAccessToken && decodedRefreshToken) {
-    console.log("refresh", decodedRefreshToken);
+    // console.log("refresh", decodedRefreshToken);
     // access token has expired but refresh token is valid, get new access token from backend
     const result = await getNewAccessToken();
 
