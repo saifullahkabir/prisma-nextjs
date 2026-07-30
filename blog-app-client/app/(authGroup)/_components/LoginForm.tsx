@@ -7,10 +7,17 @@ import { loginAction } from "../_actions/authActions";
 import { useActionState, useEffect } from "react";
 import { SpinnerButton } from "@/components/common/SpinnerButton";
 import { toast } from "sonner";
+import { useSearchParams } from "next/navigation";
 // import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
-  const [state, action, pending] = useActionState(loginAction, false);
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirectTo") ?? "";
+
+  const [state, action, pending] = useActionState(
+    loginAction.bind(null, redirectTo),
+    false,
+  );
 
   // const router = useRouter();
 

@@ -90,7 +90,11 @@ export async function proxy(request: NextRequest) {
 
   //* authenticated pages protection
   if (!accessToken && !isPublicRoute && !isAuthRoute) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    const loginUrl = new URL("/login", request.url);
+
+    loginUrl.searchParams.set("redirectTo", pathname);
+
+    return NextResponse.redirect(loginUrl);
   }
 
   //* authorization: roled based access control
@@ -115,7 +119,6 @@ export async function proxy(request: NextRequest) {
     if (!isActive) {
       return NextResponse.redirect(new URL("/payment", request.url));
     }
-
   }
 
   //   return NextResponse.redirect(new URL("/", request.url));
